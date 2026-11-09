@@ -97,7 +97,7 @@ function HeroVideo() {
       src={assetSrc('hero-intro.mp4')}
       poster={assetSrc('hero-intro-poster.jpg')}
       width={780}
-      height={540}
+      height={550}
       autoPlay
       muted={muted}
       loop
