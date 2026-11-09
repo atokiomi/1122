@@ -38,8 +38,8 @@ export const projects = [
   },
   {
     id: 'lancuili', title: '岚萃里 LANCUILI', subtitle: '一杯茶里的自然与东方。',
-    category: 'brand', english: 'LANCUILI', cover: 'lancuili',
-    tags: ['品牌识别', '茶饮视觉', '空间物料'], pages: range(26, 32), color: '#16676c',
+    category: 'brand', english: 'LANCUILI', cover: 'lancuili', coverImage: 'covers/lancuili-cover.png',
+    tags: ['品牌识别', '茶饮视觉', '空间物料'], pages: range(26, 32), color: '#194e50',
     description: '以东方茶饮文化为线索，运用青绿色、山形图案与简洁标志构建品牌识别。将视觉语言应用到杯型、包装、服饰和门店空间，形成统一的品牌触点。',
     scope: '标志与识别系统 / 包装设计 / 门店空间 / 品牌物料',
   },

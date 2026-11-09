@@ -48,7 +48,8 @@ dialog{color:var(--ink)}dialog::backdrop{background:#11150fe0;backdrop-filter:bl
   flex-shrink: 0;
 }
 
-.project-smart-gold .project-image > img {
+.project-smart-gold .project-image > img,
+.project-lancuili .project-image > img {
   object-fit: contain;
 }
 @media (max-width: 850px) {
