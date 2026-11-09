@@ -10,8 +10,8 @@ export const categories = [
 export const projects = [
   {
     id: 'smart-gold', title: '智慧金店', subtitle: '让黄金服务，走进新的日常。',
-    category: 'brand', english: 'SMART GOLD STORE', cover: 'smart-gold',
-    tags: ['品牌识别', '空间视觉', 'IP 形象'], pages: range(4, 16), color: '#d3b67b',
+    category: 'brand', english: 'SMART GOLD STORE', cover: 'smart-gold', coverImage: 'covers/smart-gold-cover.png',
+    tags: ['品牌识别', '空间视觉', 'IP 形象'], pages: range(4, 16), color: '#000000',
     description: '品牌依托金雅福全产业链实力，以数字化解决黄金流通中的信任难题。设计以可信为根基，融合轻奢质感与极简科技，打造透明、可溯的新一代黄金自助服务空间。',
     scope: '标志设计 / 视觉识别 / 品牌空间 / 品牌 IP / 营销海报 / 包装礼盒',
   },
@@ -104,5 +104,5 @@ export const expertise = [
 const baseUrl = import.meta.env?.BASE_URL ?? '/';
 export const assetSrc = (path) => `${baseUrl}assets/${path}`;
 export const pageSrc = (page) => assetSrc(`pages/${String(page).padStart(2, '0')}.webp`);
-export const coverSrc = (project) => assetSrc(`covers/${project.cover}.webp`);
+export const coverSrc = (project) => assetSrc(project.coverImage || `covers/${project.cover}.webp`);
 export const pdfUrl = assetSrc('linwei-portfolio-2026.pdf');

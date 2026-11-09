@@ -47,6 +47,10 @@ dialog{color:var(--ink)}dialog::backdrop{background:#11150fe0;backdrop-filter:bl
   height: auto;
   flex-shrink: 0;
 }
+
+.project-smart-gold .project-image > img {
+  object-fit: contain;
+}
 @media (max-width: 850px) {
   .navigation-logo-image {
     width: 40px;
