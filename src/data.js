@@ -45,7 +45,7 @@ export const projects = [
   },
   {
     id: 'powsurge', title: 'POWSURGE', subtitle: '让户外能量，自由发生。',
-    category: 'commerce', english: 'SURGE POWER, UNBOUND FREEDOM', cover: 'powsurge',
+    category: 'commerce', english: 'SURGE POWER, UNBOUND FREEDOM', cover: 'powsurge', coverImage: 'covers/powsurge-cover.png',
     tags: ['电商视觉', '户外能源', '产品叙事'], pages: [55, 56], color: '#464b36',
     description: '围绕户外电源产品，将自然场景、产品质感与功能信息结合，建立具有生活方式感的电商视觉。从主视觉到长页内容，展开产品的使用情境与细节。',
     scope: '产品主视觉 / 场景表达 / 电商详情页',
