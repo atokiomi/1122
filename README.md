@@ -30,6 +30,8 @@ npm run preview
 
 `public/assets/hero-intro-poster.jpg` 是视频加载时的封面图。首页视频样式位于 `src/hero-video.css`。
 
+手机端与电脑端共用同一播放逻辑和同一网站地址，打开页面即尝试自动播放。视频就绪或返回页面时会恢复播放；用户主动暂停后会保留暂停状态。移动端使用内联播放，并兼容 WebKit 与常见 Android 内嵌浏览器的内联属性。
+
 ## GitHub Pages
 
 仓库的 `main` 分支保存 React + Vite 源码，`gh-pages` 分支保存已构建的静态网站。资源使用相对路径，支持部署在 `/1122/` 等项目子目录。

@@ -59,12 +59,14 @@ function Header() {
 
 function HeroVideo() {
   const videoRef = useRef(null);
+  const userPausedRef = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
   const [soundBlocked, setSoundBlocked] = useState(false);
   const [needsPlay, setNeedsPlay] = useState(false);
 
   const playVideo = async () => {
+    userPausedRef.current = false;
     try {
       await videoRef.current.play();
     } catch {
@@ -75,9 +77,12 @@ function HeroVideo() {
   useEffect(() => {
     const video = videoRef.current;
     let disposed = false;
+    let starting = false;
     video.defaultMuted = false;
     video.muted = false;
     const startPlayback = async () => {
+      if (disposed || starting || userPausedRef.current || document.hidden || !video.paused) return;
+      starting = true;
       try {
         await video.play();
       } catch (error) {
@@ -95,10 +100,23 @@ function HeroVideo() {
         } catch {
           if (!disposed) setNeedsPlay(true);
         }
+      } finally {
+        starting = false;
       }
     };
+    const resumeWhenVisible = () => {
+      if (!document.hidden) startPlayback();
+    };
+    video.addEventListener('canplay', startPlayback);
+    window.addEventListener('pageshow', startPlayback);
+    document.addEventListener('visibilitychange', resumeWhenVisible);
     startPlayback();
-    return () => { disposed = true; };
+    return () => {
+      disposed = true;
+      video.removeEventListener('canplay', startPlayback);
+      window.removeEventListener('pageshow', startPlayback);
+      document.removeEventListener('visibilitychange', resumeWhenVisible);
+    };
   }, []);
 
   const playWithSound = (resumePlayback = true) => {
@@ -113,7 +131,10 @@ function HeroVideo() {
   const togglePlayback = () => {
     const video = videoRef.current;
     if (video.paused) playVideo();
-    else video.pause();
+    else {
+      userPausedRef.current = true;
+      video.pause();
+    }
   };
 
   const toggleMuted = () => {
@@ -140,6 +161,8 @@ function HeroVideo() {
       muted={muted}
       loop
       playsInline
+      webkit-playsinline=""
+      x5-playsinline="true"
       preload="auto"
       aria-label="林威的创意自我介绍，默认开启声音循环播放"
       onPlay={() => { setPlaying(true); setNeedsPlay(false); }}
