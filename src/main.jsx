@@ -227,7 +227,7 @@ function Work({ onOpen }) {
 
 function About() {
   return <section className="about-section" id="about" aria-labelledby="about-title"><div className="wrap about-grid">
-    <div className="about-visual"><div className="portrait-frame"><img src={assetSrc('portrait.png')} alt="林威在工作中的照片" loading="lazy" /><span className="portrait-caption">LIN WEI<br />DESIGNER / THINKER / DOER</span><span className="portrait-caption-cn">保持好奇，持续创造。</span></div><div className="photo-badge"><Asterisk /><span>DESIGN IS<br />A WAY OF THINKING.</span></div><div className="portrait-footnote"><span>林威 / LIN WEI</span><span>广东轻工学院</span></div></div>
+    <div className="about-visual"><div className="portrait-frame"><img src={assetSrc('portrait.png')} alt="林威在工作中的照片" loading="lazy" /><span className="portrait-caption">LIN WEI<br />DESIGNER / THINKER / DOER</span><span className="portrait-caption-cn">保持好奇，持续创造。</span></div><div className="portrait-footnote"><span>林威 / LIN WEI</span><span>广东轻工学院</span></div></div>
     <div className="about-copy"><SectionLabel number="02">A LITTLE ABOUT ME</SectionLabel><h2 id="about-title">想得全局，<br />也做得到细节<span>.</span></h2><p className="about-lead">10 年视觉设计，5 年团队管理。<br />在创意与落地之间，找到更好的答案。</p><p>我是一名专注于品牌、营销与商业视觉的设计师，服务过全国 500 强公司，拥有线上线下全链路视觉项目经验。从品牌系统到电商内容，从 IP 形象到营销 Campaign，我相信好的设计既要有审美，也要回应真实的业务需求。</p><p>我习惯以全局视角推进项目，同时关注每个触点的细节。持续探索 AIGC 在创意工作中的应用，将风格探索、素材生成与方案验证连接成自己的设计工作流，让创意更高效地落地。</p><div className="about-tags"><span>设计落地</span><span>设计管理</span><span>视觉探索</span><span>AIGC 工作流</span></div><a className="text-link" href={pdfUrl} download="林威-2026作品集.pdf">了解我的完整作品 <Icon /></a></div>
   </div></section>;
 }
