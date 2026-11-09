@@ -40,6 +40,23 @@ dialog{color:var(--ink)}dialog::backdrop{background:#11150fe0;backdrop-filter:bl
   max-width: none;
   margin: 0;
 }
+
+.navigation-logo-image {
+  display: block;
+  width: 46px;
+  height: auto;
+  flex-shrink: 0;
+}
+@media (max-width: 850px) {
+  .navigation-logo-image {
+    width: 40px;
+  }
+}
+@media (max-width: 650px) {
+  .navigation-logo-image {
+    width: 38px;
+  }
+}
 .portrait-frame.portrait-frame--designer {
   aspect-ratio: auto;
   padding-bottom: 90px;

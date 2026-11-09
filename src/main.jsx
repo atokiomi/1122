@@ -31,8 +31,8 @@ function Asterisk({ className = '' }) {
   return <svg viewBox="0 0 80 80" className={`asterisk ${className}`} aria-hidden="true"><path d="M34 0h12l-1 25L62 7l9 9-18 18 27-1v13l-27-1 18 18-9 9-17-19 1 27H34l1-27-18 19-9-9 19-18-27 1V33l27 1L8 16l9-9 18 18z" fill="currentColor" /></svg>;
 }
 
-function Logo({ footer = false }) {
-  return <a className={`logo ${footer ? 'logo-footer' : ''}`} href="#home" aria-label="林威，回到首页"><span className="logo-mark">L<span>W</span><i /></span><span className="logo-name">林威<span>LIN WEI</span></span></a>;
+function Logo({ footer = false, navigation = false }) {
+  return <a className={`logo ${footer ? 'logo-footer' : ''}`} href="#home" aria-label="林威，回到首页">{navigation ? <img className="navigation-logo-image" src={assetSrc('navigation-logo.png')} alt="招财猫标识" width={500} height={497} /> : <span className="logo-mark">L<span>W</span><i /></span>}<span className="logo-name">林威<span>LIN WEI</span></span></a>;
 }
 
 function Header() {
@@ -48,7 +48,7 @@ function Header() {
   const links = [{ id: 'work', title: '精选作品', n: '01' }, { id: 'about', title: '关于我', n: '02' }, { id: 'expertise', title: '专业能力', n: '03' }];
   return <header className="site-header">
     <div className="header-inner">
-      <Logo />
+      <Logo navigation />
       <nav className="desktop-nav" aria-label="主导航">{links.map(link => <a href={`#${link.id}`} key={link.id} className={active === link.id ? 'active' : ''}>{link.title}<sup>{link.n}</sup></a>)}</nav>
       <a className="header-contact" href="#contact">聊聊新想法 <Icon size={16} /></a>
       <button className="menu-toggle icon-button" aria-label={menuOpen ? '关闭导航' : '打开导航'} aria-expanded={menuOpen} aria-controls="mobile-nav" onClick={() => setMenuOpen(!menuOpen)}><Icon name={menuOpen ? 'close' : 'menu'} /></button>
