@@ -23,3 +23,13 @@ npm run preview
 网站包含 12 个项目、57 张项目作品页、个人简介、专业能力、联系方式与完整原始 PDF 下载。支持类别筛选、更多作品、项目详情、图片大图及键盘翻页、手机导航和邮箱复制。全部作品图像和字体存储在本地，无需依赖外部图片或字体服务。
 
 联系方式按原 PDF 展示：18520492324 / 414218814@qq.com。
+
+## GitHub Pages
+
+仓库的 `main` 分支保存 React + Vite 源码，`gh-pages` 分支保存已构建的静态网站。资源使用相对路径，支持部署在 `/1122/` 等项目子目录。
+
+在仓库 **Settings → Pages** 中，选择 **Deploy from a branch**，将分支设为 **gh-pages**、目录设为 **/ (root)**，然后保存。
+
+Pages 启用并构建完成后，访问：https://atokiomi.github.io/1122/
+
+源码修改后，需要重新执行 `npm run build`，将 `dist/` 的内容发布到 `gh-pages` 分支，并保留该分支根目录的 `.nojekyll` 文件。

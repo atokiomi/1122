@@ -101,6 +101,8 @@ export const expertise = [
   { number: '04', title: '让 AI 成为创意搭档', en: 'AIGC WORKFLOW', description: '将 AI 融入风格探索、素材生成与方案验证，建立高效且一致的创意工作流。', skills: '视觉探索 · 资产标准化 · 团队提效' },
 ];
 
-export const pageSrc = (page) => `/assets/pages/${String(page).padStart(2, '0')}.webp`;
-export const coverSrc = (project) => `/assets/covers/${project.cover}.webp`;
-export const pdfUrl = '/assets/linwei-portfolio-2026.pdf';
+const baseUrl = import.meta.env?.BASE_URL ?? '/';
+export const assetSrc = (path) => `${baseUrl}assets/${path}`;
+export const pageSrc = (page) => assetSrc(`pages/${String(page).padStart(2, '0')}.webp`);
+export const coverSrc = (project) => assetSrc(`covers/${project.cover}.webp`);
+export const pdfUrl = assetSrc('linwei-portfolio-2026.pdf');
