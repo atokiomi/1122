@@ -60,7 +60,8 @@ function Header() {
 function HeroVideo() {
   const videoRef = useRef(null);
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
+  const [soundBlocked, setSoundBlocked] = useState(false);
   const [needsPlay, setNeedsPlay] = useState(false);
 
   const playVideo = async () => {
@@ -73,10 +74,41 @@ function HeroVideo() {
 
   useEffect(() => {
     const video = videoRef.current;
-    video.defaultMuted = true;
-    video.muted = true;
-    video.play().catch(() => setNeedsPlay(true));
+    let disposed = false;
+    video.defaultMuted = false;
+    video.muted = false;
+    const startPlayback = async () => {
+      try {
+        await video.play();
+      } catch (error) {
+        if (disposed) return;
+        if (error.name !== 'NotAllowedError') {
+          setNeedsPlay(true);
+          return;
+        }
+        video.defaultMuted = true;
+        video.muted = true;
+        setMuted(true);
+        setSoundBlocked(true);
+        try {
+          await video.play();
+        } catch {
+          if (!disposed) setNeedsPlay(true);
+        }
+      }
+    };
+    startPlayback();
+    return () => { disposed = true; };
   }, []);
+
+  const playWithSound = (resumePlayback = true) => {
+    const video = videoRef.current;
+    video.defaultMuted = false;
+    video.muted = false;
+    setMuted(false);
+    setSoundBlocked(false);
+    if (resumePlayback) playVideo();
+  };
 
   const togglePlayback = () => {
     const video = videoRef.current;
@@ -86,8 +118,14 @@ function HeroVideo() {
 
   const toggleMuted = () => {
     const video = videoRef.current;
-    video.muted = !video.muted;
-    setMuted(video.muted);
+    if (video.muted) {
+      playWithSound(soundBlocked || !video.paused);
+    } else {
+      video.defaultMuted = true;
+      video.muted = true;
+      setMuted(true);
+      setSoundBlocked(false);
+    }
   };
 
   return <div className="hero-art hero-video-frame" aria-label="林威的创意自我介绍视频">
@@ -103,15 +141,15 @@ function HeroVideo() {
       loop
       playsInline
       preload="auto"
-      aria-label="林威的创意自我介绍，静音自动循环播放"
+      aria-label="林威的创意自我介绍，默认开启声音循环播放"
       onPlay={() => { setPlaying(true); setNeedsPlay(false); }}
       onPause={() => setPlaying(false)}
       onVolumeChange={event => setMuted(event.currentTarget.muted)}
     >你的浏览器暂不支持视频播放。<a href={assetSrc('hero-intro.mp4')}>打开视频</a></video>
-    {needsPlay && !playing && <button className="hero-video-start" onClick={playVideo} aria-label="播放首页视频"><span><Icon name="play" size={29} /></span></button>}
+    {needsPlay && !playing && <button className="hero-video-start" onClick={soundBlocked ? () => playWithSound() : playVideo} aria-label="播放首页视频"><span><Icon name="play" size={29} /></span></button>}
     <div className="hero-video-controls" role="group" aria-label="首页视频控制">
       <button className="video-control" onClick={togglePlayback} aria-label={playing ? '暂停视频' : '播放视频'}><Icon name={playing ? 'pause' : 'play'} size={16} /><span>{playing ? '暂停' : '播放'}</span></button>
-      <button className="video-control" onClick={toggleMuted} aria-label={muted ? '开启声音' : '关闭声音'} aria-pressed={!muted}><Icon name={muted ? 'volume-off' : 'volume-on'} size={16} /><span>{muted ? '开启声音' : '静音'}</span></button>
+      <button className="video-control" onClick={toggleMuted} aria-label={muted ? (soundBlocked ? '点击开启声音' : '开启声音') : '关闭声音'} aria-pressed={!muted}><Icon name={muted ? 'volume-off' : 'volume-on'} size={16} /><span>{muted ? (soundBlocked ? '点击开启声音' : '开启声音') : '静音'}</span></button>
     </div>
   </div>;
 }
