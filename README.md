@@ -24,6 +24,12 @@ npm run preview
 
 联系方式按原 PDF 展示：18520492324 / 414218814@qq.com。
 
+## 首页视频
+
+首页右侧使用 `public/assets/hero-intro.mp4`，容器保持 `780:530` 横屏比例，并随屏幕宽度缩放。视频以 H.264/AAC MP4 格式提供，默认静音自动循环播放，支持手机端内联播放，并提供暂停和声音开关。若浏览器阻止自动播放，则显示手动播放按钮。
+
+`public/assets/hero-intro-poster.jpg` 是视频加载时的封面图。首页视频样式位于 `src/hero-video.css`。
+
 ## GitHub Pages
 
 仓库的 `main` 分支保存 React + Vite 源码，`gh-pages` 分支保存已构建的静态网站。资源使用相对路径，支持部署在 `/1122/` 等项目子目录。

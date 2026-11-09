@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { categories, projects, expertise, assetSrc, pageSrc, coverSrc, pdfUrl } from './data';
 import './styles.css';
+import './hero-video.css';
 
 function Icon({ name = 'arrow-up-right', size = 20, ...props }) {
   const paths = {
@@ -18,6 +19,10 @@ function Icon({ name = 'arrow-up-right', size = 20, ...props }) {
     check: <path d="m5 12 4 4L19 6" />,
     zoom: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5M7.5 10.5h6m-3-3v6" /></>,
     mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></>,
+    play: <path d="m8 5 11 7-11 7z" />,
+    pause: <><path d="M8 5v14M16 5v14" /></>,
+    'volume-on': <><path d="M11 5 6 9H3v6h3l5 4zM15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14" /></>,
+    'volume-off': <><path d="M11 5 6 9H3v6h3l5 4zM16 9l5 6m0-6-5 6" /></>,
   };
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>{paths[name]}</svg>;
 }
@@ -52,6 +57,65 @@ function Header() {
   </header>;
 }
 
+function HeroVideo() {
+  const videoRef = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const [needsPlay, setNeedsPlay] = useState(false);
+
+  const playVideo = async () => {
+    try {
+      await videoRef.current.play();
+    } catch {
+      setNeedsPlay(true);
+    }
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    video.defaultMuted = true;
+    video.muted = true;
+    video.play().catch(() => setNeedsPlay(true));
+  }, []);
+
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (video.paused) playVideo();
+    else video.pause();
+  };
+
+  const toggleMuted = () => {
+    const video = videoRef.current;
+    video.muted = !video.muted;
+    setMuted(video.muted);
+  };
+
+  return <div className="hero-art hero-video-frame" aria-label="林威的创意自我介绍视频">
+    <video
+      ref={videoRef}
+      className="hero-video"
+      src={assetSrc('hero-intro.mp4')}
+      poster={assetSrc('hero-intro-poster.jpg')}
+      width={780}
+      height={530}
+      autoPlay
+      muted={muted}
+      loop
+      playsInline
+      preload="auto"
+      aria-label="林威的创意自我介绍，静音自动循环播放"
+      onPlay={() => { setPlaying(true); setNeedsPlay(false); }}
+      onPause={() => setPlaying(false)}
+      onVolumeChange={event => setMuted(event.currentTarget.muted)}
+    >你的浏览器暂不支持视频播放。<a href={assetSrc('hero-intro.mp4')}>打开视频</a></video>
+    {needsPlay && !playing && <button className="hero-video-start" onClick={playVideo} aria-label="播放首页视频"><span><Icon name="play" size={29} /></span></button>}
+    <div className="hero-video-controls" role="group" aria-label="首页视频控制">
+      <button className="video-control" onClick={togglePlayback} aria-label={playing ? '暂停视频' : '播放视频'}><Icon name={playing ? 'pause' : 'play'} size={16} /><span>{playing ? '暂停' : '播放'}</span></button>
+      <button className="video-control" onClick={toggleMuted} aria-label={muted ? '开启声音' : '关闭声音'} aria-pressed={!muted}><Icon name={muted ? 'volume-off' : 'volume-on'} size={16} /><span>{muted ? '开启声音' : '静音'}</span></button>
+    </div>
+  </div>;
+}
+
 function Hero() {
   return <section className="hero wrap" id="home" aria-labelledby="hero-title">
     <div className="hero-topline"><span className="eyebrow"><span className="status-dot" /> OPEN TO NEW POSSIBILITIES</span><span className="edition">SELECTED PORTFOLIO / 2026</span></div>
@@ -62,14 +126,7 @@ function Hero() {
         <p>以策略为起点，以视觉连接品牌与人。<br />让每一个好想法，成为真实可感的品牌体验。</p>
         <div className="hero-actions"><a className="button button-dark" href="#work">探索我的作品 <Icon name="arrow-down-right" size={18} /></a><a className="text-link" href={pdfUrl} download="林威-2026作品集.pdf">下载作品集 <Icon name="download" size={17} /></a></div>
       </div>
-      <div className="hero-art" aria-label="作品集中的银色招财猫形象">
-        <div className="art-grid" /><div className="art-orbit" /><div className="art-circle" />
-        <span className="art-label">GOOD IDEAS.<br />REAL IMPACT.</span><span className="art-corner">↗</span>
-        <img className="lucky-cat" src={assetSrc('lucky-cat.png')} alt="银色招财猫，来自林威 2026 作品集封面" fetchPriority="high" />
-        <span className="art-note">招来好灵感</span>
-        <div className="hello-sticker"><span>HELLO!</span><span>LET’S CREATE</span><Asterisk /></div>
-        <div className="art-footer"><span>CREATIVE MIND, CURIOUS SOUL.</span><span>© 2026</span></div>
-      </div>
+      <HeroVideo />
     </div>
     <div className="hero-bottom"><div className="hero-metrics"><div><strong>10<span>年</span></strong><span>视觉设计经验</span></div><i /><div><strong>5<span>年</span></strong><span>设计团队管理</span></div></div><div className="hero-fields">品牌设计 <span>×</span> 潮玩 IP <span>×</span> 电商视觉</div><a className="scroll-hint" href="#work"><span>SCROLL TO EXPLORE</span><Icon name="arrow-down" size={18} /></a></div>
   </section>;

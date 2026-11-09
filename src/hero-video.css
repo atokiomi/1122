@@ -1,0 +1,94 @@
+.hero-art.hero-video-frame {
+  width: 100%;
+  aspect-ratio: 780 / 530;
+  min-height: 0;
+  max-height: none;
+  align-self: center;
+  background: #c7c7c2;
+}
+
+.hero-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.hero-video-controls {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.video-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 8px 11px;
+  border: 1px solid #ffffff30;
+  border-radius: 24px;
+  color: #fff;
+  background: #23251fb8;
+  backdrop-filter: blur(10px);
+  font-size: 10px;
+  line-height: 1;
+  transition: background .2s;
+}
+
+.video-control:hover {
+  background: #23251fe8;
+}
+
+.video-control:focus-visible,
+.hero-video-start:focus-visible {
+  outline-color: var(--accent);
+  outline-offset: 3px;
+}
+
+.hero-video-start {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  background: #23251f12;
+}
+
+.hero-video-start > span {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  padding-left: 3px;
+  border-radius: 50%;
+  background: #23251fe0;
+  color: var(--accent);
+}
+
+@media (max-width: 650px) {
+  .hero-video-controls {
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .video-control {
+    min-height: 32px;
+    padding: 7px 10px;
+    gap: 6px;
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-control {
+    transition: none;
+  }
+}
